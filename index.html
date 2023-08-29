@@ -15,6 +15,9 @@
     <button type="button" onclick="guardarPost()">Guardar Post</button>
   </form>
   
+  <h2>Lista de Posts</h2>
+  <div id="lista-posts"></div>
+  
   <script>
     function guardarPost() {
       const titulo = document.getElementById('titulo').value;
@@ -35,7 +38,10 @@
       .then(response => response.json())
       .then(result => {
         alert(result.message);
-        location.reload(); // Recarga la página después de guardar el post
+        const listaPosts = document.getElementById('lista-posts');
+        const nuevoPost = document.createElement('div');
+        nuevoPost.innerHTML = `<h2>${titulo}</h2><p>${descripcion}</p>`;
+        listaPosts.appendChild(nuevoPost);
       })
       .catch(error => {
         console.error('Error:', error);
