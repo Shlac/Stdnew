@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Crear Post</title>
+</head>
+<body>
+  <h1>Crear un nuevo post</h1>
+  <form id="formulario">
+    <label for="titulo">Título:</label><br>
+    <input type="text" id="titulo" name="titulo"><br><br>
+    
+    <label for="descripcion">Descripción:</label><br>
+    <textarea id="descripcion" name="descripcion"></textarea><br><br>
+    
+    <button type="button" onclick="guardarPost()">Guardar Post</button>
+  </form>
+  
+  <script>
+    function guardarPost() {
+      const titulo = document.getElementById('titulo').value;
+      const descripcion = document.getElementById('descripcion').value;
+      
+      const data = {
+        titulo: titulo,
+        descripcion: descripcion
+      };
+      
+      fetch('/crear-post', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(result => {
+        alert(result.message);
+        location.reload(); // Recarga la página después de guardar el post
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+  </script>
+</body>
+</html>
